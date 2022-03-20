@@ -12,7 +12,13 @@ const App: React.FC<{}> = () => {
     "New York",
   ]);
   const [citiesInput, setCitiesInput] = useState<String>("");
-  console.log(citiesInput);
+  const handleCitiesInput = () => {
+    if (citiesInput === "") {
+      return;
+    }
+    setCities([...Cities, citiesInput]);
+    setCitiesInput("");
+  };
 
   return (
     <Box mx="8px" my="16px">
@@ -26,7 +32,7 @@ const App: React.FC<{}> = () => {
                 value={citiesInput}
                 onChange={(event) => setCitiesInput(event.target.value)}
               />
-              <IconButton>
+              <IconButton onClick={handleCitiesInput}>
                 <AddIcon />
               </IconButton>
             </Box>

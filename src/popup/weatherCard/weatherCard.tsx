@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import { featherWeatherDetails, OpenWeatherApiData } from "../../utils/api";
 
-const WeatherCard = ({ city }) => {
+const WeatherCard = ({ city  , onDelete}) => {
   const [WeatherData, SetWeatherData] = useState<OpenWeatherApiData | null>(
     null
   );
@@ -44,10 +44,10 @@ const WeatherCard = ({ city }) => {
           <Typography variant="h5">{WeatherData.name} </Typography>
           <Typography variant="body1">
             {" "}
-            {Math.round(WeatherData.main.temp)}
+            {Math.round(WeatherData.main.temp)}'C
           </Typography>
           <Typography variant="body1">
-            Feels Like: {Math.round(WeatherData.main.feels_like)}
+            Feels Like: {Math.round(WeatherData.main.feels_like)}`C
           </Typography>
         </CardContent>
       </Card>
