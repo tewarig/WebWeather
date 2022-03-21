@@ -3,26 +3,36 @@ import ReactDOM from "react-dom";
 import { InputBase, IconButton, Paper, Grid, Box } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import WeatherCard from "./weatherCard/weatherCard";
+import { getStorageCities, setStorageCities } from "../utils/storage";
 import "./popup.css";
 
 const App: React.FC<{}> = () => {
-  const [Cities, setCities] = useState<String[]>([
-    "Haldwani",
-    "Dehradun",
-    "New York",
-  ]);
+  const [Cities, setCities] = useState<String[]>([]);
   const [citiesInput, setCitiesInput] = useState<String>("");
   const handleCitiesInput = () => {
     if (citiesInput === "") {
       return;
     }
-    setCities([...Cities, citiesInput]);
-    setCitiesInput("");
+    const updatedCities = [...Cities, citiesInput];
+    setStorageCities(updatedCities).then(() => {
+      setCities(updatedCities);
+      setCitiesInput("");
+    });
   };
   const handleCityButtonDelete = (index: number) => {
     Cities.splice(index, 1);
-    setCities([...Cities]);
+    const updatedCities = [...Cities];
+    setStorageCities(updatedCities).then(() => {
+      setCities(updatedCities);
+    });
   };
+  useEffect(() => {
+    getStorageCities()
+      .then((cities) => {
+        setCities(cities);
+      })
+      .catch((error) => {});
+  }, []);
 
   return (
     <Box mx="8px" my="16px">
@@ -42,7 +52,11 @@ const App: React.FC<{}> = () => {
             </Box>
           </Paper>
           {Cities.map((cityName, index) => (
-            <WeatherCard city={cityName} key={index} onDelete={handleCityButtonDelete} />
+            <WeatherCard
+              city={cityName}
+              key={index}
+              onDelete={handleCityButtonDelete}
+            />
           ))}
         </Grid>
       </Grid>
