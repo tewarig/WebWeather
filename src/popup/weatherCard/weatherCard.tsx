@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardActions,
+  Typography,
+  Box,
+  Button,
+} from "@mui/material";
 import { featherWeatherDetails, OpenWeatherApiData } from "../../utils/api";
 
-const WeatherCard = ({ city  , onDelete}) => {
+const WeatherCard = ({ city, onDelete }) => {
   const [WeatherData, SetWeatherData] = useState<OpenWeatherApiData | null>(
     null
   );
@@ -32,6 +39,9 @@ const WeatherCard = ({ city  , onDelete}) => {
             {" "}
             <Typography variant="body1"> Error in getting Data</Typography>{" "}
           </CardContent>{" "}
+          <CardActions>
+              <Button color="secondary" onClick={onDelete}>Delete</Button>
+          </CardActions>
         </Card>{" "}
       </Box>
     );
@@ -50,6 +60,9 @@ const WeatherCard = ({ city  , onDelete}) => {
             Feels Like: {Math.round(WeatherData.main.feels_like)}`C
           </Typography>
         </CardContent>
+        <CardActions>
+              <Button color="secondary"  onClick={onDelete}>Delete</Button>
+          </CardActions>
       </Card>
     </Box>
   );
